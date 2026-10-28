@@ -42,21 +42,21 @@ struct PokemonDetailView: View {
                         // Abilities
                         if !detail.abilities.isEmpty {
                             Text("Habilidades:")
-                                .font(.headline)
-                            ForEach(detail.abilities, id: \ .ability.name) { ability in
+                                .font(.headline).padding(.top, 6)
+                            ForEach(detail.abilities, id: \.ability.name) { ability in
                                 Text(ability.ability.name.capitalized)
                             }
                         }
                         // Moves
                         if !detail.moves.isEmpty {
                             Text("Ataques:")
-                                .font(.headline)
+                                .font(.headline).padding(.top, 6)
                             ForEach(detail.moves.prefix(20), id: \ .move.name) { move in // show first 20
                                 Text(move.move.name.capitalized)
                             }
                         }
                     }
-                    .padding()
+                                        .padding(.horizontal, 16)
                 }
             } else if let errorMessage = errorMessage {
                 Text(errorMessage)
