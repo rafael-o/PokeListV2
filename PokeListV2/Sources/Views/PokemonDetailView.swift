@@ -1,17 +1,25 @@
 import SwiftUI
 import Networking
+import SwiftData
 
 struct PokemonDetailView: View {
     let url: String
-    @State private var detail: PokemonDetail?
-    @State private var loading = true
-    @State private var errorMessage: String?
+    @Environment(\.modelContext) private var modelContext
+    @StateObject private var viewModel = PokemonDetailViewModel()
+    @State private var showSelection = false
+    @State private var selectedAbility: String?
+    @State private var selectedMoves: Set<String> = []
+    
+    init(url: String) {
+        self.url = url
+        _viewModel = StateObject(wrappedValue: PokemonDetailViewModel())
+    }
     
     var body: some View {
         Group {
-            if loading {
+            if viewModel.loading {
                 ProgressView("Carregando…")
-            } else if let detail = detail {
+            } else if let detail = viewModel.detail {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 16) {
                         // Image
@@ -37,48 +45,65 @@ struct PokemonDetailView: View {
                             .bold()
                         // Types
                         if !detail.types.isEmpty {
-                            Text("Tipos: \(detail.types.map { $0.type.name.capitalized }.joined(separator: ", "))")
+                            Text("Tipos: \(detail.types.map { $0.type.name.capitalized }.joined(separator: ", ")))")
                         }
-                        // Abilities
+                        // Abilities list
                         if !detail.abilities.isEmpty {
                             Text("Habilidades:")
                                 .font(.headline).padding(.top, 6)
-                            ForEach(detail.abilities, id: \.ability.name) { ability in
+                            ForEach(detail.abilities, id: \ .ability.name) { ability in
                                 Text(ability.ability.name.capitalized)
                             }
                         }
-                        // Moves
+                        // Moves list (first 20)
                         if !detail.moves.isEmpty {
                             Text("Ataques:")
                                 .font(.headline).padding(.top, 6)
-                            ForEach(detail.moves.prefix(20), id: \ .move.name) { move in // show first 20
+                            ForEach(detail.moves.prefix(20), id: \ .move.name) { move in
                                 Text(move.move.name.capitalized)
                             }
                         }
                     }
-                                        .padding(.horizontal, 16)
+                    .padding(.horizontal, 16)
                 }
-            } else if let errorMessage = errorMessage {
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            if viewModel.isFavorited {
+                                viewModel.removeFavorite()
+                            } else {
+                                showSelection = true
+                            }
+                        }) {
+                            Image(systemName: viewModel.isFavorited ? "star.fill" : "star")
+                                .foregroundColor(viewModel.isFavorited ? .yellow : .primary)
+                        }
+                    }
+                }
+                .sheet(isPresented: $showSelection) {
+                    if let detail = viewModel.detail {
+                        FavoriteSelectionView(
+                            abilities: viewModel.abilities,
+                            moves: viewModel.availableMoves,
+                            selectedAbility: $selectedAbility,
+                            selectedMoves: $selectedMoves
+                        )
+                        .onDisappear {
+                            if let ability = selectedAbility, !selectedMoves.isEmpty {
+                                viewModel.saveFavorite(ability: ability, moves: Array(selectedMoves))
+                                selectedAbility = nil
+                                selectedMoves.removeAll()
+                            }
+                        }
+                    }
+                }
+            } else if let errorMessage = viewModel.errorMessage {
                 Text(errorMessage)
                     .foregroundColor(.red)
             }
         }
         .onAppear {
-            Task {
-                await loadDetail()
-            }
-        }
-        .navigationTitle(detail?.name.capitalized ?? "Detalhes")
-    }
-    
-    private func loadDetail() async {
-        do {
-            let client = PokeAPIClient()
-            self.detail = try await client.fetchPokemonDetail(from: url)
-            self.loading = false
-        } catch {
-            self.errorMessage = "Falha ao carregar detalhes: \(error)"
-            self.loading = false
+            viewModel.start(url: url, context: modelContext)
         }
     }
 }

@@ -3,10 +3,10 @@ import SwiftUI
 struct SplashView: View {
     var body: some View {
         ZStack {
-            Color.white.ignoresSafeArea()
+            Color.teal.ignoresSafeArea()
             Text("PokeList")
                 .font(.largeTitle)
-                .foregroundColor(.blue)
+                .foregroundColor(.white)
         }
     }
 }

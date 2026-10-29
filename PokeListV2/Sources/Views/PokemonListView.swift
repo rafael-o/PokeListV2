@@ -15,6 +15,13 @@ struct PokemonListView: View {
                 }
             }
             .navigationTitle("Pokémon")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        NavigationLink(destination: FavoritesView()) {
+                            Image(systemName: "star")
+                        }
+                    }
+                }
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 if viewModel.pokemons.isEmpty {
