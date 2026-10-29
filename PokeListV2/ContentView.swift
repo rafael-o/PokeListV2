@@ -2,7 +2,7 @@
 //  ContentView.swift
 //  PokeListV2
 //
-//  Created by admin on 10/28/26.
+//  Created by Rafael de Oliveira on 10/28/26.
 //
 
 import SwiftUI

@@ -2,7 +2,7 @@
 //  PokeListV2UITestsLaunchTests.swift
 //  PokeListV2UITests
 //
-//  Created by admin on 10/28/26.
+//  Created by Rafael de Oliveira on 10/28/26.
 //
 
 import XCTest

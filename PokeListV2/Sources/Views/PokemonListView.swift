@@ -12,6 +12,7 @@ struct PokemonListView: View {
                 }
             }
             .navigationTitle("Pokémon")
+            .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 viewModel.fetchPokemons()
             }
