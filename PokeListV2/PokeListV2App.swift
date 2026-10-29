@@ -31,7 +31,7 @@ struct PokeListV2App: App {
     @State private var showSplash = true
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Item.self,
+            FavoritePokemon.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
         do {
