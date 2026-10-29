@@ -10,11 +10,16 @@ struct PokemonListView: View {
                 NavigationLink(destination: PokemonDetailView(url: pokemon.url)) {
                     PokemonCardView(pokemon: pokemon)
                 }
+                .onAppear {
+                    viewModel.loadMoreIfNeeded(currentItem: pokemon)
+                }
             }
             .navigationTitle("Pokémon")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
-                viewModel.fetchPokemons()
+                if viewModel.pokemons.isEmpty {
+                    viewModel.fetchPokemons()
+                }
             }
         }
     }
