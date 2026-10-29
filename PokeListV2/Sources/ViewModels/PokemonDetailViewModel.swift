@@ -18,27 +18,30 @@ class PokemonDetailViewModel: ObservableObject {
     func start(url: String, context: ModelContext) {
         self.url = url
         self.modelContext = context
-        Task { await loadDetail() }
+        Task { await loadDetail(); updateFavoriteStatus() }
     }
     
-    var isFavorited: Bool {
-        guard let id = detail?.id else { return false }
+    @Published var isFavorited: Bool = false
+    
+    private func updateFavoriteStatus() {
+        guard let id = detail?.id else {
+            isFavorited = false
+            return
+        }
         let descriptor = FetchDescriptor<FavoritePokemon>(predicate: #Predicate { $0.id == id })
         do {
             let favorites = try modelContext.fetch(descriptor)
-            return !favorites.isEmpty
+            isFavorited = !favorites.isEmpty
         } catch {
             print("Failed to check favorite status: \(error)")
-            return false
+            isFavorited = false
         }
     }
     
     init(url: String, context: ModelContext) {
         self.url = url
         self.modelContext = context
-        Task {
-            await loadDetail()
-        }
+        Task { await loadDetail(); updateFavoriteStatus() }
     }
     
     private func loadDetail() async {
@@ -69,6 +72,7 @@ class PokemonDetailViewModel: ObservableObject {
         modelContext.insert(fav)
         do {
             try modelContext.save()
+            isFavorited = true
         } catch {
             print("Failed to save favorite: \(error)")
         }
@@ -81,6 +85,7 @@ class PokemonDetailViewModel: ObservableObject {
             if let toDelete = try modelContext.fetch(descriptor).first {
                 modelContext.delete(toDelete)
                 saveContext()
+                isFavorited = false
             }
         } catch {
             print("Failed to delete favorite: \(error)")
