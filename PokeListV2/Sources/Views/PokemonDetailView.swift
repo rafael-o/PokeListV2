@@ -5,7 +5,7 @@ import SwiftData
 struct PokemonDetailView: View {
     let url: String
     @Environment(\.modelContext) private var modelContext
-    @StateObject private var viewModel = PokemonDetailViewModel()
+    @StateObject private var viewModel: PokemonDetailViewModel
     @State private var showSelection = false
     @State private var selectedAbility: String?
     @State private var selectedMoves: Set<String> = []
