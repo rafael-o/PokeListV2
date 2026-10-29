@@ -75,8 +75,8 @@ struct PokemonFavoriteDetailView: View {
                     secondaryButton: .cancel()
                 )
             }
-            .onChange(of: viewModel.removed) { removed in
-                if removed {
+            .onChange(of: viewModel.removed) {
+                if viewModel.removed {
                     dismiss()
                 }
             }
