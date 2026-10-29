@@ -81,7 +81,7 @@ struct PokemonDetailView: View {
                     }
                 }
                 .sheet(isPresented: $showSelection) {
-                    if let detail = viewModel.detail {
+                    if viewModel.detail != nil {
                         FavoriteSelectionView(
                             abilities: viewModel.abilities,
                             moves: viewModel.availableMoves,
