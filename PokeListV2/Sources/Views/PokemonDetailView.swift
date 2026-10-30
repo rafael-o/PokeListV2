@@ -9,6 +9,7 @@ struct PokemonDetailView: View {
     @State private var showSelection = false
     @State private var selectedAbility: String?
     @State private var selectedMoves: Set<String> = []
+    @State private var confirmAction = false
     
     init(url: String) {
         self.url = url
@@ -86,13 +87,15 @@ struct PokemonDetailView: View {
                             abilities: viewModel.abilities,
                             moves: viewModel.availableMoves,
                             selectedAbility: $selectedAbility,
-                            selectedMoves: $selectedMoves
+                            selectedMoves: $selectedMoves,
+                            confirmAction: $confirmAction
                         )
                         .onDisappear {
-                            if let ability = selectedAbility, !selectedMoves.isEmpty {
+                            if confirmAction, let ability = selectedAbility, !selectedMoves.isEmpty {
                                 viewModel.saveFavorite(ability: ability, moves: Array(selectedMoves))
                                 selectedAbility = nil
                                 selectedMoves.removeAll()
+                                confirmAction = false
                             }
                         }
                     }

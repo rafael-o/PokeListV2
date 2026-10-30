@@ -5,6 +5,7 @@ struct FavoriteSelectionView: View {
     let moves: [String]
     @Binding var selectedAbility: String?
     @Binding var selectedMoves: Set<String>
+    @Binding var confirmAction: Bool
     @Environment(\ .dismiss) private var dismiss
     
     var body: some View {
@@ -38,6 +39,7 @@ struct FavoriteSelectionView: View {
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Salvar") {
+                        confirmAction = true
                         dismiss()
                     }
                     .disabled(selectedAbility == nil || selectedMoves.isEmpty)
@@ -45,6 +47,9 @@ struct FavoriteSelectionView: View {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancelar") { dismiss() }
                 }
+            }
+            .onAppear() {
+                selectedAbility = abilities.first ?? ""
             }
         }
     }
