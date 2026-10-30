@@ -1,22 +1,23 @@
 # PokeListV2
 
 ## Visão geral
-Este projeto demonstra uma aplicação iOS usando **SwiftUI**, **MVVM+C** e **Swift 6.3.3**. Ele inclui um módulo de **networking** local (SPM) para chamadas de API assíncronas e segue boas práticas de arquitetura.
+Este projeto demonstra uma aplicação iOS usando **SwiftUI**, **MVVM+C**, **Swift 6.3.3** e **Swift Data**. Ele é uma nova versão do projeto original https://github.com/rafael-o/PokeList, porém usando apenas componentes e recursos nativos, e atualizando a estrutura e a criação do layout. Inclui ainda um módulo de **networking** local (SPM) para chamadas de API assíncronas e segue boas práticas de arquitetura.
 
 ## Estrutura de pastas
 ```
-ProjectRoot/
-├─ Sources/
-│  ├─ Models/            # Modelos de domínio (ex.: Pokemon)
-│  ├─ Views/             # SwiftUI Views
-│  ├─ ViewModels/        # ViewModels com lógica de negócios
-│  └─ Coordinators/      # Coordinadores de navegação
-├─ Resources/            # Assets, imagens, etc.
-├─ Networking/          # Módulo SwiftPM local para chamadas de API
-├─ PokeListV2/           # Código da aplicação (App, ContentView, etc.)
+PokeListV2/
+├─ PokeListV2/          # Código da aplicação (App, Features, Models, etc.)
+│  ├─ App/
+│  ├─ Assets.xcassets/
+│  ├─ Core/
+│  ├─ Features/
+│  └─ Models/
+├─ Networking/          # Pacote SwiftPM local para chamadas de API
 ├─ PokeListV2Tests/      # Testes unitários
 ├─ PokeListV2UITests/    # Testes de UI (XCUITest)
-└─ CODE_GUIDELINES.md   # Convenções de código
+├─ PokeListV2.xcodeproj/ # Projeto Xcode
+├─ CODE_GUIDELINES.md
+├─ LICENSE
 ```
 
 ## Módulo de networking (SPM local)
@@ -47,6 +48,8 @@ Task {
 ## Testes
 - **Testes unitários** – já incluídos em `PokeListV2Tests/PokemonModelTests.swift`.
 - **Testes de UI** – implementados em `PokeListV2UITests/PokemonListUITests.swift`. Eles verificam a navegação da lista para a tela de detalhe.
+
+> Nota: nem todos os testes estão funcionais atualmente e serão revisados futuramente.
 
 ## Convenções de código
 Veja o arquivo **CODE_GUIDELINES.md** para padrões de nomenclatura, uso de `async/await`, organização de arquivos e fluxo de trabalho com Git.
