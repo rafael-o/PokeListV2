@@ -3,7 +3,7 @@ import SwiftData
 import Combine
 
 @MainActor
-class PokemonFavoriteDetailViewModel: ObservableObject {
+final class PokemonFavoriteDetailViewModel: ObservableObject {
     private var modelContext: ModelContext!
     private var pokemonId: Int!
     @Published var removed = false

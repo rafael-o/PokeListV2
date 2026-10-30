@@ -46,7 +46,7 @@ struct PokemonDetailView: View {
                             .bold()
                         // Types
                         if !detail.types.isEmpty {
-                            Text("Tipos: \(detail.types.map { $0.type.name.capitalized }.joined(separator: ", ")))")
+                            Text("Tipos: \(detail.types.map { $0.type.name.capitalized }.joined(separator: ", "))")
                         }
                         // Abilities list
                         if !detail.abilities.isEmpty {
@@ -108,6 +108,7 @@ struct PokemonDetailView: View {
         .onAppear {
             viewModel.start(url: url, context: modelContext)
         }
+        .padding()
     }
 }
 

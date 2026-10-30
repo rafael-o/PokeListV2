@@ -2,7 +2,7 @@ import Foundation
 import Combine
 import Networking
 
-class PokemonListViewModel: ObservableObject {
+final class PokemonListViewModel: ObservableObject {
     @Published var pokemons: [PokemonListItem] = []
     private var offset = 0
     private let limit = 100

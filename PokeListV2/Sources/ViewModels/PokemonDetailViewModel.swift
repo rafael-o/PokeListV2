@@ -4,7 +4,7 @@ import Combine
 import Networking
 
 @MainActor
-class PokemonDetailViewModel: ObservableObject {
+final class PokemonDetailViewModel: ObservableObject {
     private var url: String!
     private var modelContext: ModelContext!
     @Published var detail: PokemonDetail?

@@ -4,7 +4,7 @@ import Combine
 import Networking
 
 @MainActor
-class FavoritesViewModel: ObservableObject {
+final class FavoritesViewModel: ObservableObject {
     @Published var favorites: [FavoritePokemon] = []
     private var modelContext: ModelContext
     
