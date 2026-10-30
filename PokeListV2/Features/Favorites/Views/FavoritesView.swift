@@ -2,11 +2,13 @@ import SwiftUI
 import SwiftData
 
 struct FavoritesView: View {
-    @Query private var favorites: [FavoritePokemon]
+    @Environment(\.modelContext) private var modelContext
+    @StateObject private var viewModel: FavoritesViewModel
     
     let router: FavoritesRouter
     
     init(router: FavoritesRouter) {
+        _viewModel = StateObject(wrappedValue: FavoritesViewModel())
         self.router = router
     }
     
@@ -17,14 +19,14 @@ struct FavoritesView: View {
     
     var body: some View {
         Group {
-            if favorites.isEmpty {
+            if viewModel.favorites.isEmpty {
                 Text("Ainda não há Pokémon favoritados.")
                     .foregroundColor(.secondary)
                     .padding()
             } else {
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: 16) {
-                        ForEach(favorites, id: \ .id) { fav in
+                        ForEach(viewModel.favorites, id: \ .id) { fav in
                             FavoriteCardView(favorite: fav)
                                 .contentShape(Rectangle())
                                 .onTapGesture {
@@ -35,6 +37,9 @@ struct FavoritesView: View {
                     .padding()
                 }
             }
+        }
+        .onAppear {
+            viewModel.start(context: modelContext)
         }
         .navigationTitle("Favoritos")
     }

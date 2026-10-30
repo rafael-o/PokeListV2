@@ -6,9 +6,11 @@ import Networking
 @MainActor
 final class FavoritesViewModel: ObservableObject {
     @Published var favorites: [FavoritePokemon] = []
-    private var modelContext: ModelContext
+    private var modelContext: ModelContext!
     
-    init(context: ModelContext) {
+    init() { }
+    
+    func start(context: ModelContext) {
         self.modelContext = context
         loadFavorites()
     }
