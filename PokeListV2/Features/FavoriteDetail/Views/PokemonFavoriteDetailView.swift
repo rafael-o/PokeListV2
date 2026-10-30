@@ -12,15 +12,17 @@ struct FavoriteData {
 
 struct PokemonFavoriteDetailView: View {
     let favorite: FavoritePokemon
-    @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
     @StateObject private var viewModel: PokemonFavoriteDetailViewModel
     @State private var showAlert = false
     @State private var data: FavoriteData? = nil
     
-    init(favorite: FavoritePokemon) {
+    let router: PokemonFavoriteDetailRouter
+    
+    init(favorite: FavoritePokemon, router: PokemonFavoriteDetailRouter) {
         self.favorite = favorite
         _viewModel = StateObject(wrappedValue: PokemonFavoriteDetailViewModel())
+        self.router = router
     }
     
     var body: some View {
@@ -77,7 +79,7 @@ struct PokemonFavoriteDetailView: View {
             }
             .onChange(of: viewModel.removed) {
                 if viewModel.removed {
-                    dismiss()
+                    router.back()
                 }
             }
         } else {

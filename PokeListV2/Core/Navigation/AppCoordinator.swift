@@ -38,7 +38,7 @@ final class AppCoordinator: Coordinating {
         case .favorites:
             FavoritesView(router: FavoritesRouter(coordinator: self))
         case .favoriteDetail(let favorite):
-            PokemonFavoriteDetailView(favorite: favorite)
+            PokemonFavoriteDetailView(favorite: favorite, router: PokemonFavoriteDetailRouter(coordinator: self))
         }
     }
 }
