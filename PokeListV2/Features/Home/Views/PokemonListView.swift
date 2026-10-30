@@ -4,22 +4,31 @@ import Networking
 struct PokemonListView: View {
     @StateObject private var viewModel = PokemonListViewModel()
     
+    let router: PokemonListRouter
+    
+    init(router: PokemonListRouter) {
+        self.router = router
+    }
+    
     var body: some View {
         NavigationView {
             List(viewModel.pokemons, id: \.url) { pokemon in
-                NavigationLink(destination: PokemonDetailView(url: pokemon.url)) {
-                    PokemonCardView(pokemon: pokemon)
-                }
+                PokemonCardView(pokemon: pokemon)
                 .onAppear {
                     viewModel.loadMoreIfNeeded(currentItem: pokemon)
+                }
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    router.startDetail(url: pokemon.url)
                 }
             }
             .navigationTitle("Pokémon")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        NavigationLink(destination: FavoritesView()) {
-                            Image(systemName: "star")
-                        }
+                        Image(systemName: "star")
+                            .onTapGesture {
+                                router.startFavorites()
+                            }
                     }
                 }
             .navigationBarTitleDisplayMode(.inline)

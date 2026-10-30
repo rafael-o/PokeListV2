@@ -4,6 +4,12 @@ import SwiftData
 struct FavoritesView: View {
     @Query private var favorites: [FavoritePokemon]
     
+    let router: FavoritesRouter
+    
+    init(router: FavoritesRouter) {
+        self.router = router
+    }
+    
     private let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())
@@ -19,9 +25,11 @@ struct FavoritesView: View {
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: 16) {
                         ForEach(favorites, id: \ .id) { fav in
-                            NavigationLink(destination: PokemonFavoriteDetailView(favorite: fav)) {
-                                FavoriteCardView(favorite: fav)
-                            }
+                            FavoriteCardView(favorite: fav)
+                                .contentShape(Rectangle())
+                                .onTapGesture {
+                                    router.startDetail(favorite: fav)
+                                }
                         }
                     }
                     .padding()

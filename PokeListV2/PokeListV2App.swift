@@ -50,7 +50,7 @@ struct PokeListV2App: App {
                         }
                     }
             } else {
-                PokemonListView()
+                AppFlow()
             }
         }
         .modelContainer(sharedModelContainer)
