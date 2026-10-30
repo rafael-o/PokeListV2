@@ -1,7 +1,10 @@
 # Código e Convenções
 
 ## Estrutura de Pastas
-- **Sources/** – código de produção, organizado por domínio (Models, ViewModels, Views, Coordinators, etc.).
+- **App/** – arquivos de configuração do app, classe de fluxos.
+- **Core/** – componentes globais do app, separados por funcionalidades (Navigation, etc.).
+- **Features/** – código de produção, organizado por telas (Home, Detail, Favorites, etc.).
+- **Models/** – Modelos usados por mais de uma classe ou view.
 - **Tests/** – testes unitários.
 - **UITests/** – testes de interface de usuário.
 - **Networking/** – módulo SwiftPM local para chamadas de API.
