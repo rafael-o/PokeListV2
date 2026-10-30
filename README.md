@@ -6,13 +6,13 @@ Este projeto demonstra uma aplicação iOS usando **SwiftUI**, **MVVM+C**, **Swi
 ## Estrutura de pastas
 ```
 PokeListV2/
-├─ PokeListV2/          # Código da aplicação (App, Features, Models, etc.)
-│  ├─ App/
-│  ├─ Assets.xcassets/
-│  ├─ Core/
-│  ├─ Features/
-│  └─ Models/
-├─ Networking/          # Pacote SwiftPM local para chamadas de API
+├─ PokeListV2/           # Código da aplicação (App, Features, Models, etc.)
+│  ├─ App/               # Arquivos de configuração do app, classe de fluxos
+│  ├─ Assets.xcassets/   # Recursos e imagens
+│  ├─ Core/              # Componentes globais
+│  ├─ Features/          # Funcionalidades separadas por views
+│  └─ Models/            # Modelos reutilizáveis
+├─ Networking/           # Pacote SwiftPM local para chamadas de API
 ├─ PokeListV2Tests/      # Testes unitários
 ├─ PokeListV2UITests/    # Testes de UI (XCUITest)
 ├─ PokeListV2.xcodeproj/ # Projeto Xcode
@@ -46,8 +46,8 @@ Task {
 3. Selecione o produto **Networking** e adicione-o ao alvo `PokeListV2`.
 
 ## Testes
-- **Testes unitários** – já incluídos em `PokeListV2Tests/PokemonModelTests.swift`.
-- **Testes de UI** – implementados em `PokeListV2UITests/PokemonListUITests.swift`. Eles verificam a navegação da lista para a tela de detalhe.
+- **Testes unitários** – já incluídos em `PokeListV2Tests/`.
+- **Testes de UI** – implementados em `PokeListV2UITests/`.
 
 > Nota: nem todos os testes estão funcionais atualmente e serão revisados futuramente.
 
@@ -63,7 +63,7 @@ cd PokeListV2
 # Abrir no Xcode
 open PokeListV2.xcodeproj
 
-# (Opcional) Adicionar o pacote de networking conforme descrito acima.
+# Adicionar o pacote de networking conforme descrito acima, caso este não esteja presente nas dependências.
 
 # Build e execute
 Cmd+R
