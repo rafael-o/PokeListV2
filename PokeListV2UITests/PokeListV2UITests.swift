@@ -23,14 +23,31 @@ final class PokeListV2UITests: XCTestCase {
     }
 
     @MainActor
+    func testNavigationToFavorites() throws {
+        let app = XCUIApplication()
+        app.launch()
+        
+        // Tap the star button in the navigation bar to go to the Favorites view.
+        let navBar = app.navigationBars["Pokémon"]
+        XCTAssertTrue(navBar.waitForExistence(timeout: 5), "Navigation bar should exist")
+        let starButton = navBar.buttons["star"]
+        XCTAssertTrue(starButton.waitForExistence(timeout: 5), "Star button should exist")
+        starButton.tap()
+        
+        // Wait for the favorites view to appear.
+        let favoritesNav = app.navigationBars["Favoritos"]
+        XCTAssertTrue(favoritesNav.waitForExistence(timeout: 5), "Favorites view navigation bar should appear")
+    }
+    
+    @MainActor
     func testExample() throws {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
         app.launch()
 
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // XCUIAutomation Documentation
-        // https://developer.apple.com/documentation/xcuiautomation
+        // Verify that the navigation bar title "Pokémon" exists.
+        let navBar = app.navigationBars["Pokémon"]
+        XCTAssertTrue(navBar.waitForExistence(timeout: 5), "Navigation bar with title 'Pokémon' should exist")
     }
 
     @MainActor
